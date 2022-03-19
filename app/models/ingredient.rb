@@ -2,15 +2,26 @@
 #
 # Table name: ingredients
 #
-#  id         :bigint           not null, primary key
-#  recipe_id  :bigint           not null
+#  id         :uuid             not null, primary key
 #  name       :string
 #  quantity   :integer
 #  unit       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  food_id    :bigint           not null
+#  food_id    :uuid             not null
+#  recipe_id  :uuid             not null
+#
+# Indexes
+#
+#  index_ingredients_on_food_id    (food_id)
+#  index_ingredients_on_recipe_id  (recipe_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (food_id => foods.id)
+#  fk_rails_...  (recipe_id => recipes.id)
 #
 class Ingredient < ApplicationRecord
+  belongs_to :food
   belongs_to :recipe
 end

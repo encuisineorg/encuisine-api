@@ -1,0 +1,120 @@
+# frozen_string_literal: true
+
+require 'swagger_helper'
+
+describe 'Recipes API' do
+  path '/api/v1/recipes/search' do
+    post 'Search a recipe' do
+      tags 'Recipes'
+      produces 'application/json'
+      parameter name: :q, in: :headers, type: :string
+
+      response '200', 'recipes' do
+        let(:q) { "Smoothie" }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/recipes/{id}' do
+    get 'Retrieves a recipe' do
+      tags 'Recipes'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'recipe found' do
+        schema type: :object,
+          properties: {
+            id: { type: :integer },
+            author: { type: :string },
+            content: { type: :string },
+            ingredients: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  id: { type: :integer },
+                  food_id: { type: :integer },
+                  name: { type: :string },
+                  quantity: { type: :integer },
+                  unit: { type: :string },
+                  created_at: { type: :string, format: :datetime },
+                  updated_at: { type: :string, format: :datetime }
+                }
+              }
+            },
+            license: { type: :string },
+            source_url: { type: :string },
+            created_at: { type: :string, format: :datetime },
+            updated_at: { type: :string, format: :datetime }
+        }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/recipes' do
+    post 'Creates a recipe' do
+      tags 'Recipes'
+      consumes 'application/json'
+      parameter name: :recipe, in: :body, schema: {
+        type: :object,
+        properties: {
+          author: { type: :string },
+          content: { type: :string },
+          ingredients_attributes: {
+            type: :array,
+            items: {
+              type: :object,
+              properties: {
+                name: { type: :string },
+                quantity: { type: :integer },
+                unit: { type: :string },
+                food_id: { type: :integer }
+              }
+            }
+          },
+          license: { type: :string },
+          source_url: { type: :string },
+          title: { type: :string }
+        }
+      }
+
+      response '200', 'recipe created' do
+        let(:recipe) {
+          {
+            author: "Nous",
+            content: "Coupez les fruits en morceaux. Ajoutez le lait. Mixez le tout. A déguster frais.",
+            ingredients_attributes: [
+              {
+                name: "Banane",
+                quantity: 1
+              },
+              {
+                name: "Fraise",
+                quantity: 2
+              },
+              {
+                name: "Lait",
+                quantity: 5,
+                unit: "cL"
+              }
+            ],
+            license: "CC0",
+            title: "Smoothie banane fraise"
+          }
+        }
+        run_test!
+      end
+
+      response '422', 'unprocessable entity' do
+        let(:recipe) {
+          {
+            titles: "Smoothie banane fraise"
+          }
+        }
+        run_test!
+      end
+    end
+  end
+end

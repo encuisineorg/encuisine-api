@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_19_180555) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_19_185327) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "unaccent"
 
-  create_table "foods", force: :cascade do |t|
+  create_table "foods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "emoji"
     t.string "months", default: [], array: true
@@ -30,14 +31,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_180555) do
     t.integer "ciqual_ssssgrp_code"
   end
 
-  create_table "ingredients", force: :cascade do |t|
-    t.bigint "recipe_id", null: false
+  create_table "ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "recipe_id", null: false
     t.string "name"
     t.integer "quantity"
     t.string "unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "food_id", null: false
+    t.uuid "food_id", null: false
     t.index ["food_id"], name: "index_ingredients_on_food_id"
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
   end
@@ -51,11 +52,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_180555) do
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
   end
 
-  create_table "recipes", force: :cascade do |t|
+  create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "author"
+    t.string "license"
+    t.string "source_url"
   end
 
   add_foreign_key "ingredients", "foods"

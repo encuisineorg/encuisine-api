@@ -1,0 +1,120 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/recipes/search":
+    post:
+      summary: Search a recipe
+      tags:
+      - Recipes
+      parameters:
+      - name: q
+        in: headers
+        schema:
+          type: string
+      responses:
+        '200':
+          description: recipes
+  "/api/v1/recipes/{id}":
+    get:
+      summary: Retrieves a recipe
+      tags:
+      - Recipes
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: recipe found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  author:
+                    type: string
+                  content:
+                    type: string
+                  ingredients:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        food_id:
+                          type: integer
+                        name:
+                          type: string
+                        quantity:
+                          type: integer
+                        unit:
+                          type: string
+                        created_at:
+                          type: string
+                          format: datetime
+                        updated_at:
+                          type: string
+                          format: datetime
+                  license:
+                    type: string
+                  source_url:
+                    type: string
+                  created_at:
+                    type: string
+                    format: datetime
+                  updated_at:
+                    type: string
+                    format: datetime
+  "/api/v1/recipes":
+    post:
+      summary: Creates a recipe
+      tags:
+      - Recipes
+      parameters: []
+      responses:
+        '200':
+          description: recipe created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+                ingredients_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      quantity:
+                        type: integer
+                      unit:
+                        type: string
+                      food_id:
+                        type: integer
+                license:
+                  type: string
+                source_url:
+                  type: string
+                title:
+                  type: string
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.encuisine.org
