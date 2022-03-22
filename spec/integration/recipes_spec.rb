@@ -23,32 +23,40 @@ describe 'Recipes API' do
       parameter name: :id, in: :path, type: :string
 
       response '200', 'recipe found' do
+        let(:id) { Recipe.create(
+          author: "Nous",
+          content: "Coupez les fruits en morceaux. Ajoutez le lait. Mixez le tout. A déguster frais.",
+          license: "CC0",
+          source_url: "https://encuisine.org",
+          title: "Smoothie banane fraise",
+          total_minutes: 5
+        ).id }
         schema type: :object,
           properties: {
-            id: { type: :integer },
-            author: { type: :string },
-            content: { type: :string },
-            ingredients: {
-              type: :array,
-              items: {
-                type: :object,
-                properties: {
-                  id: { type: :integer },
-                  food_id: { type: :integer },
-                  name: { type: :string },
-                  quantity: { type: :integer },
-                  unit: { type: :string },
-                  created_at: { type: :string, format: :datetime },
-                  updated_at: { type: :string, format: :datetime }
-                }
+          id: { type: :uuid },
+          author: { type: :string },
+          content: { type: :string },
+          ingredients: {
+            type: :array,
+            items: {
+              type: :object,
+              properties: {
+                id: { type: :uuid },
+                food_id: { type: :uuid },
+                name: { type: :string },
+                quantity: { type: :integer },
+                unit: { type: :string },
+                created_at: { type: :string, format: :datetime },
+                updated_at: { type: :string, format: :datetime }
               }
-            },
-            license: { type: :string },
-            source_url: { type: :string },
-            title: { type: :string },
-            total_minutes: { type: :integer },
-            created_at: { type: :string, format: :datetime },
-            updated_at: { type: :string, format: :datetime }
+            }
+          },
+          license: { type: :string },
+          source_url: { type: :string },
+          title: { type: :string },
+          total_minutes: { type: :integer },
+          created_at: { type: :string, format: :datetime },
+          updated_at: { type: :string, format: :datetime }
         }
         run_test!
       end
@@ -72,7 +80,7 @@ describe 'Recipes API' do
                 name: { type: :string },
                 quantity: { type: :integer },
                 unit: { type: :string },
-                food_id: { type: :integer }
+                food_id: { type: :uuid }
               }
             }
           },
@@ -86,26 +94,29 @@ describe 'Recipes API' do
       response '200', 'recipe created' do
         let(:recipe) {
           {
-            author: "Nous",
-            content: "Coupez les fruits en morceaux. Ajoutez le lait. Mixez le tout. A déguster frais.",
-            ingredients_attributes: [
-              {
-                name: "Banane",
-                quantity: 1
-              },
-              {
-                name: "Fraise",
-                quantity: 2
-              },
-              {
-                name: "Lait",
-                quantity: 5,
-                unit: "cL"
-              }
-            ],
-            license: "CC0",
-            title: "Smoothie banane fraise",
-            total_minutes: 5
+            recipe: {
+              author: "Nous",
+              content: "Coupez les fruits en morceaux. Ajoutez le lait. Mixez le tout. A déguster frais.",
+              ingredients_attributes: [
+                {
+                  name: "Banane",
+                  quantity: 1
+                },
+                {
+                  name: "Fraise",
+                  quantity: 2
+                },
+                {
+                  name: "Lait",
+                  quantity: 5,
+                  unit: "cL"
+                }
+              ],
+              license: "CC0",
+              source_url: "https://encuisine.org",
+              title: "Smoothie banane fraise",
+              total_minutes: 5
+            }
           }
         }
         run_test!
@@ -114,7 +125,9 @@ describe 'Recipes API' do
       response '422', 'unprocessable entity' do
         let(:recipe) {
           {
-            titles: "Smoothie banane fraise"
+            recipe: {
+              author: "Nous"
+            }
           }
         }
         run_test!
