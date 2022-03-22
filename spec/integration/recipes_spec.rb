@@ -3,7 +3,7 @@
 require 'swagger_helper'
 
 describe 'Recipes API' do
-  path '/api/v1/recipes/search' do
+  path '/api/v1/recipes/searches' do
     post 'Search a recipe' do
       tags 'Recipes'
       produces 'application/json'
@@ -45,6 +45,8 @@ describe 'Recipes API' do
             },
             license: { type: :string },
             source_url: { type: :string },
+            title: { type: :string },
+            total_minutes: { type: :integer },
             created_at: { type: :string, format: :datetime },
             updated_at: { type: :string, format: :datetime }
         }
@@ -76,7 +78,8 @@ describe 'Recipes API' do
           },
           license: { type: :string },
           source_url: { type: :string },
-          title: { type: :string }
+          title: { type: :string },
+          total_minutes: { type: :integer }
         }
       }
 
@@ -101,7 +104,8 @@ describe 'Recipes API' do
               }
             ],
             license: "CC0",
-            title: "Smoothie banane fraise"
+            title: "Smoothie banane fraise",
+            total_minutes: 5
           }
         }
         run_test!

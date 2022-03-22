@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/api/v1/recipes/search":
+  "/api/v1/recipes/searches":
     post:
       summary: Search a recipe
       tags:
@@ -67,6 +67,10 @@ paths:
                     type: string
                   source_url:
                     type: string
+                  title:
+                    type: string
+                  total_minutes:
+                    type: integer
                   created_at:
                     type: string
                     format: datetime
@@ -113,6 +117,8 @@ paths:
                   type: string
                 title:
                   type: string
+                total_minutes:
+                  type: integer
 servers:
 - url: https://{defaultHost}
   variables:
