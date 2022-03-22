@@ -37,7 +37,7 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: integer
+                    type: uuid
                   author:
                     type: string
                   content:
@@ -48,9 +48,9 @@ paths:
                       type: object
                       properties:
                         id:
-                          type: integer
+                          type: uuid
                         food_id:
-                          type: integer
+                          type: uuid
                         name:
                           type: string
                         quantity:
@@ -110,7 +110,7 @@ paths:
                       unit:
                         type: string
                       food_id:
-                        type: integer
+                        type: uuid
                 license:
                   type: string
                 source_url:
