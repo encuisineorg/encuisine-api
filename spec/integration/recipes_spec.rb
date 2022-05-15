@@ -3,6 +3,17 @@
 require 'swagger_helper'
 
 describe 'Recipes API' do
+  path '/api/v1/recipes' do
+    get 'List all recipes' do
+      tags 'Recipes'
+      produces 'application/json'
+
+      response '200', 'recipes' do
+        run_test!
+      end
+    end
+  end
+
   path '/api/v1/recipes/searches' do
     post 'Search a recipe' do
       tags 'Recipes'

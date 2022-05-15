@@ -3,6 +3,18 @@
 module Api
   module V1
     class RecipesController < ApplicationController
+      def index
+        recipes = Recipe.all
+        render json: recipes.select(
+          :id,
+          :author,
+          :license,
+          :source_url,
+          :total_minutes,
+          :title
+        ).to_json
+      end
+
       def show
         recipe = Recipe.find(params[:id])
         render json: recipe.to_json(include: [:ingredients])

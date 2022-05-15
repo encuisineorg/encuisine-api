@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       namespace :foods do
         resources :searches, only: [:create]
       end
-      resources :recipes, only: [:show, :create]
+      resources :recipes, only: [:index, :show, :create]
       namespace :recipes do
         resources :searches, only: [:create]
       end
