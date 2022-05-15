@@ -11,7 +11,7 @@ paths:
       - Recipes
       parameters:
       - name: q
-        in: headers
+        in: params
         schema:
           type: string
       responses:

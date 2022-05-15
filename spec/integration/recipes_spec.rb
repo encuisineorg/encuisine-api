@@ -7,7 +7,7 @@ describe 'Recipes API' do
     post 'Search a recipe' do
       tags 'Recipes'
       produces 'application/json'
-      parameter name: :q, in: :headers, type: :string
+      parameter name: :q, in: :params, type: :string
 
       response '200', 'recipes' do
         let(:q) { "Smoothie" }
