@@ -27,7 +27,7 @@ API de recettes libres !
 
 ### Run the test suite
 
-1. Run `rspec`
+1. Run `bundle exec rspec`
 
 ### Generate the Swagger JSON file
 
