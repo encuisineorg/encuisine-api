@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_014535) do
   create_table "ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "recipe_id", null: false
     t.string "name"
-    t.integer "quantity"
+    t.float "quantity"
     t.string "unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
