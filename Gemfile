@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby "3.1.3"
 
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "nokogiri" # Work with XML and HTML [https://github.com/sparklemotion/nokogiri]
