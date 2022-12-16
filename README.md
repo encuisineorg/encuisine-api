@@ -12,14 +12,14 @@ API de recettes libres !
 
 ### Requirements
 
-- Ruby 3.1.1 or higher
+- Ruby 3.1.3
 - bundler - `gem install bundler`
 - PostgreSQL
 
 ### Initial setup
 
 1. Customize the `config/database.yml`
-2. Run `bin/setup`
+1. Run `bin/setup`
 
 ### Running En Cuisine ! API
 
