@@ -1,0 +1,12 @@
+{
+  "name": "En Cuisine API",
+  "description": "API de recettes libres !",
+  "website": "https://api.encuisine.org/api-docs/",
+  "scripts": {
+    "dokku": {
+      "postdeploy": "bundle exec rails db:migrate"
+    },
+    "postdeploy": "bundle exec rails db:migrate"
+  }
+}
+
