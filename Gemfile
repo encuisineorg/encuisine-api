@@ -5,6 +5,7 @@ ruby "3.1.3"
 
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "nokogiri" # Work with XML and HTML [https://github.com/sparklemotion/nokogiri]
+gem "pagy" # The Best Pagination Ruby Gem [https://github.com/ddnexus/pagy]
 gem "pg", "~> 1.1" # Use pg as the database for Active Record
 gem "pg_search" # Builds named scopes that take advantage of PostgreSQL's full text search [https://github.com/Casecommons/pg_search]
 gem "puma", "~> 5.0" # Use the Puma web server [https://github.com/puma/puma]
