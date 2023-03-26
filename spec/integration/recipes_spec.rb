@@ -7,8 +7,8 @@ describe 'Recipes API' do
     get 'List or search in all recipes' do
       tags 'Recipes'
       produces 'application/json'
-      parameter name: :q, in: :params, type: :string
-      parameter name: :page, in: :params, type: :integer
+      parameter name: :q, in: :params, type: :query
+      parameter name: :page, in: :params, type: :query
 
       response '200', 'recipes' do
         run_test!
@@ -20,7 +20,7 @@ describe 'Recipes API' do
     post 'Search a recipe' do
       tags 'Recipes'
       produces 'application/json'
-      parameter name: :q, in: :params, type: :string
+      parameter name: :q, in: :params, type: :query
 
       response '200', 'recipes' do
         let(:q) { "Smoothie" }
@@ -33,7 +33,7 @@ describe 'Recipes API' do
     get 'Retrieves a recipe' do
       tags 'Recipes'
       produces 'application/json'
-      parameter name: :id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :path
 
       response '200', 'recipe found' do
         let(:id) { Recipe.create(
@@ -164,8 +164,8 @@ describe 'Foods API' do
     get 'List or search in all foods' do
       tags 'Foods'
       produces 'application/json'
-      parameter name: :q, in: :params, type: :string
-      parameter name: :page, in: :params, type: :integer
+      parameter name: :q, in: :params, type: :query
+      parameter name: :page, in: :params, type: :query
 
       response '200', 'foods' do
         let(:q) { "Banane" }
