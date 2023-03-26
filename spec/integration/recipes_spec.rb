@@ -92,6 +92,7 @@ describe 'Recipes API' do
         type: :object,
         properties: {
           author: { type: :string },
+          cook_time_in_minutes: { type: :integer },
           content: { type: :string },
           ingredients_attributes: {
             type: :array,
@@ -106,6 +107,9 @@ describe 'Recipes API' do
             }
           },
           license: { type: :string },
+          prep_time_in_minutes: { type: :integer },
+          recipe_category: { type: :string },
+          recipe_yield: { type: :integer },
           source_url: { type: :string },
           title: { type: :string },
           total_minutes: { type: :integer }
