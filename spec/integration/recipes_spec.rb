@@ -33,7 +33,7 @@ describe 'Recipes API' do
     get 'Retrieves a recipe' do
       tags 'Recipes'
       produces 'application/json'
-      parameter name: :id, in: :path, type: :path
+      parameter name: :id, in: :path, type: :string
 
       response '200', 'recipe found' do
         let(:id) { Recipe.create(
@@ -63,6 +63,7 @@ describe 'Recipes API' do
                 food_id: { type: :string },
                 name: { type: :string },
                 quantity: { type: :integer },
+                recipe_id: { type: :string },
                 unit: { type: :string },
                 created_at: { type: :string, format: :datetime },
                 updated_at: { type: :string, format: :datetime }

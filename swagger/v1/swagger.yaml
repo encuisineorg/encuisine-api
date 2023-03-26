@@ -93,7 +93,7 @@ paths:
         in: path
         required: true
         schema:
-          type: path
+          type: string
       responses:
         '200':
           description: recipe found
@@ -123,6 +123,8 @@ paths:
                           type: string
                         quantity:
                           type: integer
+                        recipe_id:
+                          type: string
                         unit:
                           type: string
                         created_at:
