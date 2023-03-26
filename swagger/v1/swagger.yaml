@@ -11,13 +11,13 @@ paths:
       - Recipes
       parameters:
       - name: q
-        in: params
+        in: query
         schema:
-          type: query
+          type: string
       - name: page
-        in: params
+        in: query
         schema:
-          type: query
+          type: integer
       responses:
         '200':
           description: recipes
@@ -77,9 +77,9 @@ paths:
       - Recipes
       parameters:
       - name: q
-        in: params
+        in: query
         schema:
-          type: query
+          type: string
       responses:
         '200':
           description: recipes
@@ -158,13 +158,13 @@ paths:
       - Foods
       parameters:
       - name: q
-        in: params
+        in: query
         schema:
-          type: query
+          type: string
       - name: page
-        in: params
+        in: query
         schema:
-          type: query
+          type: integer
       responses:
         '200':
           description: foods
