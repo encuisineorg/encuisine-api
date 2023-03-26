@@ -4,14 +4,22 @@ module Api
   module V1
     class RecipesController < ApplicationController
       def index
-        recipes = Recipe.all
+        if params[:q]
+          pagy, recipes = pagy(Recipe.search_by_title(params[:q]))
+        else
+          pagy, recipes = pagy(Recipe.all)
+        end
         render json: recipes.select(
           :id,
           :author,
+          :cook_time_in_minutes,
           :license,
+          :recipe_category,
+          :recipe_yield,
+          :prep_time_in_minutes,
           :source_url,
+          :title,
           :total_minutes,
-          :title
         ).to_json
       end
 
@@ -39,7 +47,11 @@ module Api
         params.require(:recipe).permit(
           :author,
           :content,
+          :cook_time_in_minutes,
           :license,
+          :prep_time_in_minutes,
+          :recipe_category,
+          :recipe_yield,
           :source_url,
           :title,
           :total_minutes,

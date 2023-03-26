@@ -4,9 +4,11 @@ require 'swagger_helper'
 
 describe 'Recipes API' do
   path '/api/v1/recipes' do
-    get 'List all recipes' do
+    get 'List or search in all recipes' do
       tags 'Recipes'
       produces 'application/json'
+      parameter name: :q, in: :params, type: :string
+      parameter name: :page, in: :params, type: :integer
 
       response '200', 'recipes' do
         run_test!
@@ -37,23 +39,28 @@ describe 'Recipes API' do
         let(:id) { Recipe.create(
           author: "Nous",
           content: "Coupez les fruits en morceaux. Ajoutez le lait. Mixez le tout. A déguster frais.",
+          cook_time_in_minutes: 0,
           license: "CC0",
+          prep_time_in_minutes: 5,
+          recipe_category: "Vegan",
+          recipe_yield: 2,
           source_url: "https://encuisine.org",
           title: "Smoothie banane fraise",
           total_minutes: 5
         ).id }
         schema type: :object,
           properties: {
-          id: { type: :uuid },
+          id: { type: :string },
           author: { type: :string },
           content: { type: :string },
+          cook_time_in_minutes: { type: :integer },
           ingredients: {
             type: :array,
             items: {
               type: :object,
               properties: {
-                id: { type: :uuid },
-                food_id: { type: :uuid },
+                id: { type: :string },
+                food_id: { type: :string },
                 name: { type: :string },
                 quantity: { type: :integer },
                 unit: { type: :string },
@@ -63,6 +70,9 @@ describe 'Recipes API' do
             }
           },
           license: { type: :string },
+          prep_time_in_minutes: { type: :integer },
+          recipe_category: { type: :string },
+          recipe_yield: { type: :integer },
           source_url: { type: :string },
           title: { type: :string },
           total_minutes: { type: :integer },
@@ -91,7 +101,7 @@ describe 'Recipes API' do
                 name: { type: :string },
                 quantity: { type: :integer },
                 unit: { type: :string },
-                food_id: { type: :uuid }
+                food_id: { type: :string }
               }
             }
           },
@@ -124,6 +134,8 @@ describe 'Recipes API' do
                 }
               ],
               license: "CC0",
+              recipe_category: "Vegan",
+              recipe_yield: 2,
               source_url: "https://encuisine.org",
               title: "Smoothie banane fraise",
               total_minutes: 5
@@ -145,4 +157,21 @@ describe 'Recipes API' do
       end
     end
   end
+end
+
+describe 'Foods API' do
+  path '/api/v1/foods' do
+    get 'List or search in all foods' do
+      tags 'Foods'
+      produces 'application/json'
+      parameter name: :q, in: :params, type: :string
+      parameter name: :page, in: :params, type: :integer
+
+      response '200', 'foods' do
+        let(:q) { "Banane" }
+        run_test!
+      end
+    end
+  end
+
 end
