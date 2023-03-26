@@ -13,11 +13,11 @@ paths:
       - name: q
         in: params
         schema:
-          type: string
+          type: query
       - name: page
         in: params
         schema:
-          type: integer
+          type: query
       responses:
         '200':
           description: recipes
@@ -39,6 +39,8 @@ paths:
               properties:
                 author:
                   type: string
+                cook_time_in_minutes:
+                  type: integer
                 content:
                   type: string
                 ingredients_attributes:
@@ -56,6 +58,12 @@ paths:
                         type: string
                 license:
                   type: string
+                prep_time_in_minutes:
+                  type: integer
+                recipe_category:
+                  type: string
+                recipe_yield:
+                  type: integer
                 source_url:
                   type: string
                 title:
@@ -71,7 +79,7 @@ paths:
       - name: q
         in: params
         schema:
-          type: string
+          type: query
       responses:
         '200':
           description: recipes
@@ -85,7 +93,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          type: path
       responses:
         '200':
           description: recipe found
@@ -143,8 +151,8 @@ paths:
                   updated_at:
                     type: string
                     format: datetime
-  "/api/v1/foods/searches":
-    post:
+  "/api/v1/foods":
+    get:
       summary: List or search in all foods
       tags:
       - Foods
@@ -152,11 +160,11 @@ paths:
       - name: q
         in: params
         schema:
-          type: string
+          type: query
       - name: page
         in: params
         schema:
-          type: integer
+          type: query
       responses:
         '200':
           description: foods
