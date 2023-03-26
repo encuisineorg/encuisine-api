@@ -6,9 +6,18 @@ info:
 paths:
   "/api/v1/recipes":
     get:
-      summary: List all recipes
+      summary: List or search in all recipes
       tags:
       - Recipes
+      parameters:
+      - name: q
+        in: params
+        schema:
+          type: string
+      - name: page
+        in: params
+        schema:
+          type: integer
       responses:
         '200':
           description: recipes
@@ -44,7 +53,7 @@ paths:
                       unit:
                         type: string
                       food_id:
-                        type: uuid
+                        type: string
                 license:
                   type: string
                 source_url:
@@ -86,20 +95,22 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: uuid
+                    type: string
                   author:
                     type: string
                   content:
                     type: string
+                  cook_time_in_minutes:
+                    type: integer
                   ingredients:
                     type: array
                     items:
                       type: object
                       properties:
                         id:
-                          type: uuid
+                          type: string
                         food_id:
-                          type: uuid
+                          type: string
                         name:
                           type: string
                         quantity:
@@ -114,6 +125,12 @@ paths:
                           format: datetime
                   license:
                     type: string
+                  prep_time_in_minutes:
+                    type: integer
+                  recipe_category:
+                    type: string
+                  recipe_yield:
+                    type: integer
                   source_url:
                     type: string
                   title:
@@ -126,8 +143,27 @@ paths:
                   updated_at:
                     type: string
                     format: datetime
+  "/api/v1/foods/searches":
+    post:
+      summary: List or search in all foods
+      tags:
+      - Foods
+      parameters:
+      - name: q
+        in: params
+        schema:
+          type: string
+      - name: page
+        in: params
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: foods
 servers:
-- url: https://{defaultHost}
+- url: "{protocol}://{defaultHost}"
   variables:
+    protocol:
+      default: https
     defaultHost:
       default: api.encuisine.org

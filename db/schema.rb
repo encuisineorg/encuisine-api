@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_16_222418) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_26_014535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -61,6 +61,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_16_222418) do
     t.string "license"
     t.string "source_url"
     t.integer "total_minutes"
+    t.integer "prep_time_in_minutes"
+    t.integer "cook_time_in_minutes"
+    t.integer "recipe_yield"
+    t.string "recipe_category"
   end
 
   add_foreign_key "ingredients", "foods"
