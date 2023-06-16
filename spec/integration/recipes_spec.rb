@@ -3,27 +3,29 @@
 require 'swagger_helper'
 
 describe 'Recipes API' do
-  path '/api/v1/recipes' do
-    get 'List or search in all recipes' do
+  path '/api/v1/recipes/autocomplete' do
+    get 'Autocomplete search in recipes' do
+      tags 'Recipes'
+      produces 'application/json'
+      parameter name: :q, in: :query, type: :string
+
+      response '200', 'recipes' do
+        let(:q) { "Smoo" }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/recipes/search' do
+    get 'Search in all recipes' do
       tags 'Recipes'
       produces 'application/json'
       parameter name: :q, in: :query, type: :string
       parameter name: :page, in: :query, type: :integer
 
       response '200', 'recipes' do
-        run_test!
-      end
-    end
-  end
-
-  path '/api/v1/recipes/searches' do
-    post 'Search a recipe' do
-      tags 'Recipes'
-      produces 'application/json'
-      parameter name: :q, in: :query, type: :string
-
-      response '200', 'recipes' do
         let(:q) { "Smoothie" }
+        let(:page) { 1 }
         run_test!
       end
     end
@@ -165,8 +167,60 @@ describe 'Recipes API' do
 end
 
 describe 'Foods API' do
-  path '/api/v1/foods' do
-    get 'List or search in all foods' do
+  path '/api/v1/foods/autocomplete' do
+    get 'Autocomplete search in foods' do
+      tags 'Foods'
+      produces 'application/json'
+      parameter name: :q, in: :query, type: :string
+
+      response '200', 'foods' do
+        let(:q) { "Bana" }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/foods/local' do
+    get 'List local foods' do
+      tags 'Foods'
+      produces 'application/json'
+      parameter name: :page, in: :query, type: :integer
+
+      response '200', 'foods' do
+        let(:page) { 1 }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/foods/seasonal' do
+    get 'List seasonal foods' do
+      tags 'Foods'
+      produces 'application/json'
+      parameter name: :page, in: :query, type: :integer
+
+      response '200', 'foods' do
+        let(:page) { 1 }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/foods/local_seasonal' do
+    get 'List local and seasonal foods' do
+      tags 'Foods'
+      produces 'application/json'
+      parameter name: :page, in: :query, type: :integer
+
+      response '200', 'foods' do
+        let(:page) { 1 }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/foods/search' do
+    get 'Search in all foods' do
       tags 'Foods'
       produces 'application/json'
       parameter name: :q, in: :query, type: :string
@@ -174,9 +228,31 @@ describe 'Foods API' do
 
       response '200', 'foods' do
         let(:q) { "Banane" }
+        let(:page) { 1 }
         run_test!
       end
     end
   end
 
+  path '/api/v1/foods/{id}' do
+    get 'Retrieves a food' do
+      tags 'Foods'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'food found' do
+        let(:id) { Food.create(
+          name: "Banane",
+        ).id }
+        schema type: :object,
+          properties: {
+          id: { type: :string },
+          name: { type: :string },
+          created_at: { type: :string, format: :datetime },
+          updated_at: { type: :string, format: :datetime }
+        }
+        run_test!
+      end
+    end
+  end
 end

@@ -4,11 +4,12 @@ module Api
   module V1
     class RecipesController < ApplicationController
       def index
-        if params[:q]
+        if params[:q].present?
           pagy, recipes = pagy(Recipe.search_by_title(params[:q]))
         else
           pagy, recipes = pagy(Recipe.all)
         end
+
         render json: recipes.select(
           :id,
           :author,

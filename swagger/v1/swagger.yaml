@@ -1,12 +1,25 @@
 ---
 openapi: 3.0.1
 info:
-  title: API V1
+  title: Cuisine.eco API V1
   version: v1
 paths:
-  "/api/v1/recipes":
+  "/api/v1/recipes/autocomplete":
     get:
-      summary: List or search in all recipes
+      summary: Autocomplete search in recipes
+      tags:
+      - Recipes
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: recipes
+  "/api/v1/recipes/search":
+    get:
+      summary: Search in all recipes
       tags:
       - Recipes
       parameters:
@@ -18,68 +31,6 @@ paths:
         in: query
         schema:
           type: integer
-      responses:
-        '200':
-          description: recipes
-    post:
-      summary: Creates a recipe
-      tags:
-      - Recipes
-      parameters: []
-      responses:
-        '200':
-          description: recipe created
-        '422':
-          description: unprocessable entity
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                author:
-                  type: string
-                cook_time_in_minutes:
-                  type: integer
-                content:
-                  type: string
-                ingredients_attributes:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      quantity:
-                        type: integer
-                      unit:
-                        type: string
-                      food_id:
-                        type: string
-                license:
-                  type: string
-                prep_time_in_minutes:
-                  type: integer
-                recipe_category:
-                  type: string
-                recipe_yield:
-                  type: integer
-                source_url:
-                  type: string
-                title:
-                  type: string
-                total_minutes:
-                  type: integer
-  "/api/v1/recipes/searches":
-    post:
-      summary: Search a recipe
-      tags:
-      - Recipes
-      parameters:
-      - name: q
-        in: query
-        schema:
-          type: string
       responses:
         '200':
           description: recipes
@@ -153,9 +104,111 @@ paths:
                   updated_at:
                     type: string
                     format: datetime
-  "/api/v1/foods":
+  "/api/v1/recipes":
+    post:
+      summary: Creates a recipe
+      tags:
+      - Recipes
+      parameters: []
+      responses:
+        '200':
+          description: recipe created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                cook_time_in_minutes:
+                  type: integer
+                content:
+                  type: string
+                ingredients_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      quantity:
+                        type: integer
+                      unit:
+                        type: string
+                      food_id:
+                        type: string
+                license:
+                  type: string
+                prep_time_in_minutes:
+                  type: integer
+                recipe_category:
+                  type: string
+                recipe_yield:
+                  type: integer
+                source_url:
+                  type: string
+                title:
+                  type: string
+                total_minutes:
+                  type: integer
+  "/api/v1/foods/autocomplete":
     get:
-      summary: List or search in all foods
+      summary: Autocomplete search in foods
+      tags:
+      - Foods
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: foods
+  "/api/v1/foods/local":
+    get:
+      summary: List local foods
+      tags:
+      - Foods
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: foods
+  "/api/v1/foods/seasonal":
+    get:
+      summary: List seasonal foods
+      tags:
+      - Foods
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: foods
+  "/api/v1/foods/local_seasonal":
+    get:
+      summary: List local and seasonal foods
+      tags:
+      - Foods
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: foods
+  "/api/v1/foods/search":
+    get:
+      summary: Search in all foods
       tags:
       - Foods
       parameters:
@@ -170,6 +223,35 @@ paths:
       responses:
         '200':
           description: foods
+  "/api/v1/foods/{id}":
+    get:
+      summary: Retrieves a food
+      tags:
+      - Foods
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: food found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                    format: datetime
+                  updated_at:
+                    type: string
+                    format: datetime
 servers:
 - url: "{protocol}://{defaultHost}"
   variables:

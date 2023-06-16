@@ -16,14 +16,10 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
-class Food < ApplicationRecord
-  include PgSearch::Model
+require "test_helper"
 
-  has_many :ingredients
-  has_many :recipes, through: :ingredients
-
-  scope :local, -> { where(local: true) }
-  scope :seasonal, -> { where("'?' = ANY(months)", Date.today.month - 1) }
-  pg_search_scope :search_by_name, against: :name, ignoring: :accents, using: { tsearch: { prefix: true } }
-
+class FoodTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

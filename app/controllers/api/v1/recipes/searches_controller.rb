@@ -4,9 +4,9 @@ module Api
   module V1
     module Recipes
       class SearchesController < ApplicationController
-        def create
-          recipe = Recipe.search_by_title(params[:q])
-          render json: recipe.to_json(include: [:ingredients])
+        def show
+          pagy, recipes = pagy(Recipe.search_by_title(params[:q]))
+          render json: recipes.to_json(include: [:ingredients])
         end
       end
     end
