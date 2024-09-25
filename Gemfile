@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.3.5"
 
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "nokogiri" # Work with XML and HTML [https://github.com/sparklemotion/nokogiri]
@@ -32,6 +32,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
   gem "annotate" # Add a comment summarizing the current schema [https://github.com/ctran/annotate_models]
+  gem "bundler-audit"
   gem "rubocop", require: false # Ruby static code analyzer (a.k.a. linter) and code formatter [https://github.com/rubocop/rubocop/]
 end
 
