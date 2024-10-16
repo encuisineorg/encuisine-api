@@ -4,7 +4,7 @@ module Api
   module V1
     class RecipesController < ApplicationController
       def index
-        if params[:q].present?
+        if params[:q]
           pagy, recipes = pagy(Recipe.search_by_title(params[:q]))
         else
           pagy, recipes = pagy(Recipe.all)
